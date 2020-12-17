@@ -3,7 +3,7 @@ class Comment
     self.inheritance_column = nil
 
     belongs_to :comment, inverse_of: :reactions
-    belongs_to :user, inverse_of: :reactions
+    belongs_to :user, inverse_of: :comment_reactions
 
     enum(type: { like: 0, dislike: 1 })
   end

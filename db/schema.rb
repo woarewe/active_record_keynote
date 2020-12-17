@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_202346) do
+ActiveRecord::Schema.define(version: 2020_12_16_142825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "comment_reactions", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -33,6 +39,18 @@ ActiveRecord::Schema.define(version: 2020_12_15_202346) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "contact_inquiries", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.string "phone"
+    t.string "company"
+    t.text "body"
+    t.integer "category_id"
+    t.datetime "response_deadline"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "posts", force: :cascade do |t|
