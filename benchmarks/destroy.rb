@@ -24,10 +24,16 @@ class Service
   end
 end
 
-Benchmark.ips do |x|
+# Benchmark.ips do |x|
+#   x.report('dependent destroy') { Service.dependent_destroy(User.ids.sample) }
+#
+#   x.report('custom deleting') { Service.custom_deleting(User.ids.sample) }
+#
+#   x.compare!
+# end
+
+Benchmark.bm(15) do |x|
   x.report('dependent destroy') { Service.dependent_destroy(User.ids.sample) }
 
   x.report('custom deleting') { Service.custom_deleting(User.ids.sample) }
-
-  x.compare!
 end
