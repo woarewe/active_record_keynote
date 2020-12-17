@@ -32,5 +32,6 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
 end
 
+gem 'activerecord-import', '~> 1.0.7'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
