@@ -22,18 +22,28 @@ class Service
       raise ActiveRecord::Rollback
     end
   end
+
+  def self.on_delete_cascade(*user_ids)
+    ActiveRecord::Base.transaction do
+      User.where(id: user_ids).delete_all
+
+      raise ActiveRecord::Rollback
+    end
+  end
 end
 
-# Benchmark.ips do |x|
-#   x.report('dependent destroy') { Service.dependent_destroy(User.ids.sample) }
-#
-#   x.report('custom deleting') { Service.custom_deleting(User.ids.sample) }
-#
-#   x.compare!
-# end
-
-Benchmark.bm(15) do |x|
+Benchmark.ips do |x|
   x.report('dependent destroy') { Service.dependent_destroy(User.ids.sample) }
 
   x.report('custom deleting') { Service.custom_deleting(User.ids.sample) }
+
+  x.report('on delete cascade') { Service.on_delete_cascade(User.ids.sample) }
+
+  x.compare!
 end
+
+# Benchmark.bm(15) do |x|
+#   x.report('dependent destroy') { Service.dependent_destroy(User.ids.sample) }
+#
+#   x.report('custom deleting') { Service.custom_deleting(User.ids.sample) }
+# end
